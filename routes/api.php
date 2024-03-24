@@ -27,11 +27,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','role:admin'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
     Route::post('/user/assign-role', [UserController::class, 'assignRole']);
     Route::post('/user/assign-permission', [UserController::class, 'assignPermission']);
     Route::get('/user/permissions', [UserController::class, 'getUserPermissions']);
+    
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
