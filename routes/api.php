@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\Backend\AuthController;
+use App\Http\Controllers\TenderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +26,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [UserController::class, 'index']);
+    Route::post('/user/assign-role', [UserController::class, 'assignRole']);
+    Route::post('/user/assign-permission', [UserController::class, 'assignPermission']);
+    Route::get('/user/permissions', [UserController::class, 'getUserPermissions']);
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/tenders', [TenderController::class, 'index']);
+    Route::get('/tenders/{id}', [TenderController::class, 'show']);
+    Route::post('/tenders', [TenderController::class, 'store'])->middleware('permission:publish articles');
+});
 
 

@@ -4,6 +4,9 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+use Spatie\Permission\Middlewares\PermissionMiddleware;
+
+
 class Kernel extends HttpKernel
 {
     /**
@@ -45,6 +48,14 @@ class Kernel extends HttpKernel
             'throttle:api',
         ],
     ];
+  
+    
+    protected $routeMiddleware = [
+        // Other middleware
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    ];
+    
+
 
     /**
      * The application's middleware aliases.
