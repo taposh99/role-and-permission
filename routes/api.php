@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/tenders', [TenderController::class, 'index']);
+    Route::get('/tenders', [TenderController::class, 'index'])->middleware('permission:edit articles');
     Route::get('/tenders/{id}', [TenderController::class, 'show']);
     Route::post('/tenders', [TenderController::class, 'store'])->middleware('permission:publish articles');
 });
