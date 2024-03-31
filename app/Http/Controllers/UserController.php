@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::with('roles')->get();
+        return UserResource::collection($users);
+    }
+
     public function assignRole(Request $request)
     {
         $request->validate([

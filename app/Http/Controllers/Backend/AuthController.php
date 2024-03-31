@@ -40,6 +40,9 @@ class AuthController extends BaseController
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->plainTextToken; 
             $success['name'] =  $user->name;
+
+            $roles = $user->roles->pluck('name'); // Fetching the names of the roles
+            $success['roles'] = $roles;
    
             return $this->sendResponse($success, 'User login successfully.');
         } 
@@ -47,4 +50,5 @@ class AuthController extends BaseController
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
         } 
     }
+
 }
