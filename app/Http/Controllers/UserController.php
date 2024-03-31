@@ -33,11 +33,12 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'permission' => 'required|string|exists:permissions,name',
-        ]);
+            'permission' => 'required|array',
+            'permission.*' => 'string|exists:permissions,name',]);
 
         $user = User::where('email', $request->email)->first();
         $user->givePermissionTo($request->permission);
+       
 
         return response()->json(['message' => 'Permission assigned successfully.']);
     }
