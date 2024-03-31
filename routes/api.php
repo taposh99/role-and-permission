@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum','role:super-admin'])->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/tenders', [TenderController::class, 'index'])->middleware('permission:edit articles');
+    Route::get('/tenders', [TenderController::class, 'index'])->middleware('permission:edit product');
     Route::get('/tenders/{id}', [TenderController::class, 'show']);
     Route::post('/tenders', [TenderController::class, 'store'])->middleware('permission:create product');
 });
